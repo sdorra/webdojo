@@ -1,7 +1,7 @@
 {
-  "name": "counter",
+  "name": "challenges",
   "version": "1.0.0",
-  "description": "Simple react counter challenge",
+  "description": "WebDojo Challenges",
   "type": "module",
   "scripts": {
     "dev": "vite",

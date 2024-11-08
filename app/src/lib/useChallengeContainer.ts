@@ -1,6 +1,7 @@
 import { FileSystemTree, WebContainer } from "@webcontainer/api";
 import { useCallback, useEffect, useState } from "react";
 import { Terminal } from "./useTerminal";
+import { Challenge } from "content-collections";
 
 let webContainerInstancePromise = null;
 if (typeof window !== "undefined") {
@@ -10,9 +11,11 @@ if (typeof window !== "undefined") {
 type ChallengeContainer = {
   fileSystem: FileSystemTree;
   terminal: Terminal;
+  challenge: Challenge;
 };
 
 export const useChallengeContainer = ({
+  challenge,
   fileSystem,
   terminal,
 }: ChallengeContainer) => {
@@ -71,7 +74,13 @@ export const useChallengeContainer = ({
       return;
     }
     return webContainerInstancePromise.then(async (instance) => {
-      const process = await instance.spawn("npm", ["test"]);
+      const process = await instance.spawn("npm", [
+        "exec",
+        "vitest",
+        "--",
+        "--run",
+        `./src/${challenge.name}/.`,
+      ]);
       process.output.pipeTo(
         new WritableStream({
           write: (chunk) => {

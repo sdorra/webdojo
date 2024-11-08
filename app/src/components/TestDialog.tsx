@@ -88,8 +88,8 @@ function TestResult({ test }: Props) {
 
   return (
     <>
-      <TerminalCmp setRef={ref} />
       <Result returnCode={returnCode} />
+      <TerminalCmp setRef={ref} />
     </>
   );
 }

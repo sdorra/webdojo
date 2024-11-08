@@ -29,7 +29,6 @@ async function createDirectory(directoryPath: string): Promise<FileSystemTree> {
   return directory;
 }
 
-export function createFileSystem(challengeId: string): Promise<FileSystemTree> {
-  const root = path.join(CHALLENGE_DIRECTORY, challengeId);
-  return createDirectory(root);
+export function createFileSystem(): Promise<FileSystemTree> {
+  return createDirectory(CHALLENGE_DIRECTORY);
 }

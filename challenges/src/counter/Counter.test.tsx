@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from '@testing-library/user-event'
-import { Counter } from "./Counter";
+import Counter from "./Counter.solution";
 import "@testing-library/jest-dom/vitest";
 
 describe("Counter", () => {

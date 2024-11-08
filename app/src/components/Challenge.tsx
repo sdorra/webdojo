@@ -9,45 +9,26 @@ import { Terminal } from "./Terminal";
 import { Preview } from "./Preview";
 import { Editor } from "./Editor";
 import { TestDialog } from "./TestDialog";
+import { Challenge as ChallengeType } from "content-collections";
 
 type Props = {
+  challenge: ChallengeType;
   fileSystem: FileSystemTree;
 };
 
-const sample = `import {  } from "react";
-
-export function Counter() {
-  function increment() {
-  }
-
-  function decrement() {
-  }
-
-  return (
-    <section className="counter">
-      <button data-testid="decrement" onClick={decrement}>
-        -
-      </button>
-      <output data-testid="output">0</output>
-      <button data-testid="increment" onClick={increment}>
-        +
-      </button>
-    </section>
-  );
-}`;
-
-export function Challenge({ fileSystem }: Props) {
+export function Challenge({ challenge, fileSystem }: Props) {
   const { ref, terminal } = useTerminal();
   const { previewUrl, setContent, test } = useChallengeContainer({
+    challenge,
     fileSystem,
     terminal,
   });
-  const [code, setCode] = useState(sample);
+  const [code, setCode] = useState(challenge.main.content);
   const debouncedCode = useDebounce(code, 300);
 
   useEffect(() => {
-    setContent("./src/Counter.tsx", debouncedCode);
-  }, [setContent, debouncedCode]);
+    setContent(`./src/${challenge.main.filePath}`, debouncedCode);
+  }, [setContent, debouncedCode, challenge]);
 
   return (
     <main className="h-screen w-full">
@@ -56,7 +37,7 @@ export function Challenge({ fileSystem }: Props) {
       </nav>
       <section className="grid grid-cols-2 grid-rows-2 h-full">
         <Editor defaultValue={code} onChange={setCode} className="row-span-2" />
-        <Preview url={previewUrl} />
+        <Preview url={previewUrl} challenge={challenge.name} />
         <Terminal setRef={ref} />
       </section>
     </main>
