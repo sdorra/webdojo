@@ -1,5 +1,5 @@
-import { FileSystemTree, WebContainer } from "@webcontainer/api";
-import { useCallback, useEffect, useState } from "react";
+import { FileSystemTree, WebContainer, WebContainerProcess } from "@webcontainer/api";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Terminal } from "./useTerminal";
 import { Challenge } from "content-collections";
 
@@ -20,12 +20,20 @@ export const useChallengeContainer = ({
   terminal,
 }: ChallengeContainer) => {
   const [previewUrl, setPreviewUrl] = useState<string>();
+  const isRunning = useRef(false);
 
   useEffect(() => {
+    let devServer: WebContainerProcess;
+
     const instantiate = async () => {
       if (!webContainerInstancePromise) {
         return;
       }
+      if (isRunning.current) {
+        return;
+      }
+
+      isRunning.current = true;
       const instance = await webContainerInstancePromise;
       await instance.mount(fileSystem);
 
@@ -50,7 +58,8 @@ export const useChallengeContainer = ({
         throw new Error("Unable to run npm install");
       }
 
-      const devServer = await instance.spawn("npm", ["run", "dev"]);
+      // TODO: stop dev server, on unmount
+      devServer = await instance.spawn("npm", ["run", "dev"]);
       devServer.output.pipeTo(
         new WritableStream({
           write: (chunk) => {
@@ -63,10 +72,6 @@ export const useChallengeContainer = ({
     };
 
     instantiate();
-
-    return () => {
-      // TODO: clean up
-    };
   }, [fileSystem, terminal]);
 
   const test = useCallback((term: Terminal) => {
@@ -95,7 +100,7 @@ export const useChallengeContainer = ({
 
       return exitCode;
     });
-  }, []);
+  }, [challenge.name]);
 
   const setContent = useCallback((pathName: string, content: string) => {
     if (!webContainerInstancePromise) {

@@ -1,3 +1,5 @@
+import { Loading } from "./Loading";
+
 type Props = {
   url?: string;
   challenge: string;
@@ -5,7 +7,11 @@ type Props = {
 
 export function Preview({ url, challenge }: Props) {
   if (!url) {
-    return <div className="w-full h-full border">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center">
+        <Loading />
+      </div>
+    );
   }
 
   return (

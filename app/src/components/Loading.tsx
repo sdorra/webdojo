@@ -12,7 +12,7 @@ export function Loading({ className }: Props) {
     >
       <circle
         fill="none"
-        stroke-width="10"
+        strokeWidth="10"
         className="stroke-current opacity-40"
         cx="50"
         cy="50"
@@ -20,10 +20,10 @@ export function Loading({ className }: Props) {
       />
       <circle
         fill="none"
-        stroke-width="10"
+        strokeWidth="10"
         className="stroke-current"
-        stroke-dasharray="250"
-        stroke-dashoffset="210"
+        strokeDasharray="250"
+        strokeDashoffset="210"
         cx="50"
         cy="50"
         r="40"
