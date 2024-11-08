@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.txt$/,
+      use: 'raw-loader',
+    });
+    return config;
+  },
   async headers() {
     // https://webcontainers.io/guides/quickstart#cross-origin-isolation
     return [

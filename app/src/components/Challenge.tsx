@@ -8,22 +8,19 @@ import useTerminal from "@/lib/useTerminal";
 import { Terminal } from "./Terminal";
 import { Preview } from "./Preview";
 import { Editor } from "./Editor";
+import { TestDialog } from "./TestDialog";
 
 type Props = {
   fileSystem: FileSystemTree;
 };
 
-const sample = `import { useState } from "react";
+const sample = `import {  } from "react";
 
 export function Counter() {
-  const [count, setCount] = useState(0);
-
   function increment() {
-    setCount(count + 1);
   }
 
   function decrement() {
-    setCount(count - 1);
   }
 
   return (
@@ -31,7 +28,7 @@ export function Counter() {
       <button data-testid="decrement" onClick={decrement}>
         -
       </button>
-      <output data-testid="output">{count}</output>
+      <output data-testid="output">0</output>
       <button data-testid="increment" onClick={increment}>
         +
       </button>
@@ -41,7 +38,7 @@ export function Counter() {
 
 export function Challenge({ fileSystem }: Props) {
   const { ref, terminal } = useTerminal();
-  const { previewUrl, setContent } = useChallengeContainer({
+  const { previewUrl, setContent, test } = useChallengeContainer({
     fileSystem,
     terminal,
   });
@@ -54,11 +51,11 @@ export function Challenge({ fileSystem }: Props) {
 
   return (
     <main className="h-screen w-full">
-      <nav>
-        <button>Submit</button>
+      <nav className="p-2 border-b">
+        <TestDialog test={test} />
       </nav>
       <section className="grid grid-cols-2 grid-rows-2 h-full">
-        <Editor value={code} onChange={setCode} className="row-span-2" />
+        <Editor defaultValue={code} onChange={setCode} className="row-span-2" />
         <Preview url={previewUrl} />
         <Terminal setRef={ref} />
       </section>

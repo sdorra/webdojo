@@ -35,9 +35,6 @@ export default function useTerminal<T extends HTMLElement>() {
     };
 
     const initTerminal = async () => {
-      if (window === undefined) {
-        return;
-      }
       if (!terminalRef.current) {
         const { Terminal: XTermTerminal } = await import("@xterm/xterm");
 
@@ -74,6 +71,7 @@ export default function useTerminal<T extends HTMLElement>() {
     };
 
     initTerminal();
+
     return () => {
       if (ref) {
         ref.removeEventListener("resize", resize);

@@ -66,12 +66,22 @@ export const useChallengeContainer = ({
     };
   }, [fileSystem, terminal]);
 
-  const test = useCallback(() => {
+  const test = useCallback((term: Terminal) => {
     if (!webContainerInstancePromise) {
       return;
     }
-    webContainerInstancePromise.then(async (instance) => {
+    return webContainerInstancePromise.then(async (instance) => {
       const process = await instance.spawn("npm", ["test"]);
+      process.output.pipeTo(
+        new WritableStream({
+          write: (chunk) => {
+            if (term) {
+              term.write(chunk);
+            }
+          },
+        })
+      );
+
       const exitCode = await process.exit;
 
       return exitCode;
@@ -90,6 +100,6 @@ export const useChallengeContainer = ({
   return {
     previewUrl,
     setContent,
-    test,
+    test: previewUrl ? test : undefined,
   };
 };
