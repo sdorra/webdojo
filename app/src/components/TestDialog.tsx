@@ -16,6 +16,7 @@ import { CircleCheckBig, CircleX } from "lucide-react";
 import { Card, CardHeader, CardTitle } from "./ui/card";
 import { Loading } from "./Loading";
 import { cn } from "@/lib/utils";
+import { Challenge } from "content-collections";
 
 type ResultProps = {
   returnCode?: number;
@@ -68,6 +69,7 @@ function Result({ returnCode }: ResultProps) {
 }
 
 type Props = {
+  challenge: Challenge;
   test?: (terminal: Terminal) => Promise<number> | undefined;
 };
 
@@ -89,12 +91,12 @@ function TestResult({ test }: Props) {
   return (
     <>
       <Result returnCode={returnCode} />
-      <TerminalCmp setRef={ref} />
+      <TerminalCmp setRef={ref} className="rounded-xl shadow-lg" />
     </>
   );
 }
 
-export function TestDialog({ test }: Props) {
+export function TestDialog({ challenge, test }: Props) {
   const [tries, setTries] = useState(0);
 
   function onOpenChange(open: boolean) {
@@ -110,13 +112,10 @@ export function TestDialog({ test }: Props) {
       </DialogTrigger>
       <DialogContent className="max-w-4xl">
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </DialogDescription>
+          <DialogTitle>{challenge.title}</DialogTitle>
+          <DialogDescription>{challenge.description}</DialogDescription>
         </DialogHeader>
-        <TestResult key={tries} test={test} />
+        <TestResult key={tries} challenge={challenge} test={test} />
       </DialogContent>
     </Dialog>
   );

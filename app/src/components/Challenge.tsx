@@ -40,7 +40,7 @@ export function Challenge({ challenge, fileSystem }: Props) {
     <main className="h-screen w-full">
       <nav className="space-x-2 border-b text-right py-2">
         <Instructions challenge={challenge} />
-        <TestDialog test={test} />
+        <TestDialog challenge={challenge} test={test} />
         <Solution copySolution={copySolution} />
       </nav>
       <section className="grid grid-cols-2 grid-rows-2 h-full">
