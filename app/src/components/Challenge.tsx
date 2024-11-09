@@ -10,7 +10,7 @@ import { Preview } from "./Preview";
 import { Editor } from "./Editor";
 import { TestDialog } from "./TestDialog";
 import { Challenge as ChallengeType } from "content-collections";
-import Link from "next/link";
+import { Instructions } from "./Instructions";
 
 type Props = {
   challenge: ChallengeType;
@@ -33,9 +33,9 @@ export function Challenge({ challenge, fileSystem }: Props) {
 
   return (
     <main className="h-screen w-full">
-      <nav className="p-2 space-x-5 border-b">
+      <nav className="space-x-2 border-b text-right py-2">
+        <Instructions challenge={challenge} />
         <TestDialog test={test} />
-        <Link href="/">Back</Link>
       </nav>
       <section className="grid grid-cols-2 grid-rows-2 h-full">
         <Editor defaultValue={code} onChange={setCode} className="row-span-2" />

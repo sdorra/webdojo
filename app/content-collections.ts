@@ -36,7 +36,7 @@ const challenges = defineCollection({
     solution: z.string(),
   }),
   transform: async (document, context) => {
-    const instruction = await compileMarkdown(context, document);
+    const instructions = await compileMarkdown(context, document);
 
     const { _meta, ...rest } = document;
     const name = _meta.directory;
@@ -45,7 +45,7 @@ const challenges = defineCollection({
     return {
       ...rest,
       name,
-      instruction,
+      instructions,
       main: await filer(document.main),
       solution: await filer(document.solution),
     };
