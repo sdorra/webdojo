@@ -11,6 +11,7 @@ import { Editor } from "./Editor";
 import { TestDialog } from "./TestDialog";
 import { Challenge as ChallengeType } from "content-collections";
 import { Instructions } from "./Instructions";
+import { Solution } from "./Solution";
 
 type Props = {
   challenge: ChallengeType;
@@ -27,6 +28,10 @@ export function Challenge({ challenge, fileSystem }: Props) {
   const [code, setCode] = useState(challenge.main.content);
   const debouncedCode = useDebounce(code, 300);
 
+  function copySolution() {
+    setCode(challenge.solution.content);
+  }
+
   useEffect(() => {
     setContent(`./src/${challenge.main.filePath}`, debouncedCode);
   }, [setContent, debouncedCode, challenge]);
@@ -36,9 +41,10 @@ export function Challenge({ challenge, fileSystem }: Props) {
       <nav className="space-x-2 border-b text-right py-2">
         <Instructions challenge={challenge} />
         <TestDialog test={test} />
+        <Solution copySolution={copySolution} />
       </nav>
       <section className="grid grid-cols-2 grid-rows-2 h-full">
-        <Editor defaultValue={code} onChange={setCode} className="row-span-2" />
+        <Editor value={code} onChange={setCode} className="row-span-2" />
         <Preview url={previewUrl} challenge={challenge.name} />
         <Terminal setRef={ref} />
       </section>

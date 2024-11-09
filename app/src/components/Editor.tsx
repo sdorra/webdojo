@@ -2,7 +2,7 @@ import MonacoEditor, { Monaco } from "@monaco-editor/react";
 import reactDefinitionFile from "./typings/react.d.ts.txt";
 
 type Props = {
-  defaultValue: string;
+  value: string;
   onChange: (value: string) => void;
   className?: string;
 };
@@ -13,7 +13,7 @@ ${definition}
 }`;
 }
 
-export function Editor({ defaultValue, onChange, className }: Props) {
+export function Editor({ value, onChange, className }: Props) {
   function handleEditorChange(value: string | undefined) {
     onChange(value || "");
   }
@@ -48,7 +48,7 @@ export function Editor({ defaultValue, onChange, className }: Props) {
     <div className={className}>
       <MonacoEditor
         defaultLanguage="typescript"
-        defaultValue={defaultValue}
+        value={value}
         onChange={handleEditorChange}
         beforeMount={handleBeforeMount}
         options={{ minimap: { enabled: false } }}

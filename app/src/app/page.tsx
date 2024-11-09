@@ -15,7 +15,7 @@ export default function ChallengesOverviewPage() {
         {allChallenges.map((challenge) => (
           <li key={challenge.name}>
             <Link href={`/challenges/${challenge.name}`} className="group">
-              <Card className="group-hover:border-teal-500 flex items-center">
+              <Card className="group-hover:border-teal-500 border-2 flex items-center">
                 <Circle className="size-8 ml-5 text-muted-foreground" />
                 <CardHeader>
                   <CardTitle>{challenge.title}</CardTitle>
