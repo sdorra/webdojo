@@ -6,7 +6,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Circle } from "lucide-react";
+import { CheckCircle, Circle } from "lucide-react";
+import ChallengeStatusCheckbox from "@/components/ChallengeStatusCheckbox";
 
 export default function ChallengesOverviewPage() {
   return (
@@ -15,8 +16,10 @@ export default function ChallengesOverviewPage() {
         {allChallenges.map((challenge) => (
           <li key={challenge.name}>
             <Link href={`/challenges/${challenge.name}`} className="group">
-              <Card className="group-hover:border-teal-500 border-2 flex items-center">
-                <Circle className="size-8 ml-5 text-muted-foreground" />
+              <Card className="group-hover:bg-accent bg-background border flex items-center">
+                <ChallengeStatusCheckbox challenge={challenge.name} />
+                <CheckCircle className="size-8 ml-5 text-green-600 hidden group-has-[:checked]:block" />
+                <Circle className="size-8 ml-5 text-muted-foreground block group-has-[:checked]:hidden" />
                 <CardHeader>
                   <CardTitle>{challenge.title}</CardTitle>
                   <CardDescription>{challenge.description}</CardDescription>

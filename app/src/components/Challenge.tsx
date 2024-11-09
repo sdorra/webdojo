@@ -12,6 +12,7 @@ import { TestDialog } from "./TestDialog";
 import { Challenge as ChallengeType } from "content-collections";
 import { Instructions } from "./Instructions";
 import { Solution } from "./Solution";
+import { MarkAsComplete } from "./MarkAsComplete";
 
 type Props = {
   challenge: ChallengeType;
@@ -38,10 +39,11 @@ export function Challenge({ challenge, fileSystem }: Props) {
 
   return (
     <main className="h-screen w-full">
-      <nav className="space-x-2 border-b text-right py-2">
+      <nav className="flex items-center gap-2 justify-end border-b text-right py-2">
         <Instructions challenge={challenge} />
         <TestDialog challenge={challenge} test={test} />
         <Solution copySolution={copySolution} />
+        <MarkAsComplete challenge={challenge.name} />
       </nav>
       <section className="grid grid-cols-2 grid-rows-2 h-full">
         <Editor value={code} onChange={setCode} className="row-span-2" />
