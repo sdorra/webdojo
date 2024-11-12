@@ -26,7 +26,7 @@ export default function RootLayout({
             </nav>
           </header>
           <main>{children}</main>
-          <footer className="text-right">
+          <footer className="text-right pt-2">
             Made with ❤️ by Sebastian Sdorra
           </footer>
         </div>

@@ -5,6 +5,7 @@ export type Terminal = {
   open: (element: HTMLElement) => void;
   write: (data: string) => void;
   dispose: () => void;
+  fit: () => void;
 };
 
 type Fitable = {
@@ -26,11 +27,16 @@ export default function useTerminal<T extends HTMLElement>() {
       dispose: () => {
         terminalRef.current?.dispose();
       },
+      fit: () => {
+        terminalRef.current?.fit();
+      }
     };
   }, []);
   const [ref, setRef] = useState<T | null>(null);
+
   useEffect(() => {
     const resize = () => {
+      console.log("resizing terminal");
       fitAddonRef.current?.fit();
     };
 
@@ -41,6 +47,12 @@ export default function useTerminal<T extends HTMLElement>() {
         const xterm = new XTermTerminal({
           convertEol: true,
           disableStdin: true,
+          theme: {
+            background: '#ffffff',
+            foreground: '#000000',
+            cursor: '#000000',
+            selectionForeground: '#d0d0d0'
+          },
         });
 
         const { FitAddon } = await import("@xterm/addon-fit");
@@ -59,6 +71,10 @@ export default function useTerminal<T extends HTMLElement>() {
           dispose: () => {
             xterm.dispose();
           },
+          fit: () => {
+            console.log("fitting terminal");
+            fitAddon.fit();
+          }
         };
       }
 

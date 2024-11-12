@@ -8,7 +8,7 @@ type Props = {
 export function Preview({ url, challenge }: Props) {
   if (!url) {
     return (
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center h-[90%]">
         <Loading />
       </div>
     );
@@ -16,7 +16,7 @@ export function Preview({ url, challenge }: Props) {
 
   return (
     <iframe
-      className="w-full h-full border"
+      className="h-full w-full"
       src={`${url}?challenge=${challenge}`}
       title="Preview"
     />

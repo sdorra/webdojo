@@ -6,11 +6,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { AlertDescription } from "@/components/ui/alert";
 
 import { Button } from "./ui/button";
 import useTerminal, { type Terminal } from "@/lib/useTerminal";
-import { Terminal as TerminalCmp } from "./Terminal";
+import TerminalCmp from "./Terminal";
 import { useEffect, useRef, useState } from "react";
 import { CircleCheckBig, CircleX } from "lucide-react";
 import { Card, CardHeader, CardTitle } from "./ui/card";
@@ -24,17 +23,17 @@ type ResultProps = {
 
 function ResultDescription({ returnCode }: ResultProps) {
   if (returnCode === undefined) {
-    return <AlertDescription>Running tests...</AlertDescription>;
+    return <p>Running tests...</p>;
   }
 
   if (returnCode === 0) {
-    return <AlertDescription>Tests passed successfully</AlertDescription>;
+    return <p>Tests passed successfully</p>;
   }
 
   return (
-    <AlertDescription>
+    <p>
       Tests failed with return code {returnCode}
-    </AlertDescription>
+    </p>
   );
 }
 

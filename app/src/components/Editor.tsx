@@ -51,7 +51,13 @@ export function Editor({ value, onChange, className }: Props) {
         value={value}
         onChange={handleEditorChange}
         beforeMount={handleBeforeMount}
-        options={{ minimap: { enabled: false } }}
+        options={{
+          minimap: { enabled: false },
+          scrollbar: { vertical: "hidden" },
+          overviewRulerBorder: false,
+          overviewRulerLanes: 0,
+          renderLineHighlight: "none",
+        }}
       />
     </div>
   );
