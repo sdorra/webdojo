@@ -18,13 +18,15 @@ import {
 } from "./ui/resizable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { SubmitSolutionButton } from "./SubmitSolutionButton";
+import { User } from "next-auth";
 
 type Props = {
   challenge: ChallengeType;
   fileSystem: FileSystemTree;
+  user?: User;
 };
 
-export function Challenge({ challenge, fileSystem }: Props) {
+export function Challenge({ challenge, fileSystem, user }: Props) {
   const { ref, terminal } = useTerminal();
   const { previewUrl, setContent, test } = useChallengeContainer({
     challenge,
@@ -48,16 +50,27 @@ export function Challenge({ challenge, fileSystem }: Props) {
     <div className="flex flex-col h-full">
       <nav className="flex items-center gap-2 justify-end text-right py-2">
         <Instructions challenge={challenge} />
-        <TestDialog challenge={challenge} test={test} />
-        <SubmitSolutionButton challenge={challenge} code={code} />
+        {user ? (
+          <>
+            <TestDialog challenge={challenge} test={test} />
+            <SubmitSolutionButton challenge={challenge} code={code} />
+          </>
+        ) : null}
       </nav>
-      <ResizablePanelGroup direction="horizontal" className="border rounded-md shadow-md">
+      <ResizablePanelGroup
+        direction="horizontal"
+        className="border rounded-md shadow-md"
+      >
         <ResizablePanel>
           <Editor value={code} onChange={setCode} className="h-full" />
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel>
-          <Tabs value={selectedTab} onValueChange={onTabChange} className="h-full">
+          <Tabs
+            value={selectedTab}
+            onValueChange={onTabChange}
+            className="h-full"
+          >
             <TabsList className="w-full rounded-none p-6">
               <TabsTrigger value="preview">Preview</TabsTrigger>
               <TabsTrigger value="terminal">Terminal</TabsTrigger>
@@ -65,7 +78,12 @@ export function Challenge({ challenge, fileSystem }: Props) {
             <TabsContent value="preview" className="h-full">
               <Preview url={previewUrl} challenge={challenge.name} />
             </TabsContent>
-            <TabsContent value="terminal" className="h-full" forceMount hidden={selectedTab !== "terminal"}>
+            <TabsContent
+              value="terminal"
+              className="h-full"
+              forceMount
+              hidden={selectedTab !== "terminal"}
+            >
               <TerminalContainer setRef={ref} />
             </TabsContent>
           </Tabs>

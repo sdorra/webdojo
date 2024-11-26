@@ -1,5 +1,7 @@
 import { Challenge } from "@/components/Challenge";
+import { authOptions } from "@/lib/auth";
 import { allChallenges, allFileSystems } from "content-collections";
+import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -18,5 +20,13 @@ export default async function Page({ params: { name } }: Props) {
   if (!challenge) {
     return notFound();
   }
-  return <Challenge challenge={challenge} fileSystem={fileSystem.tree} />;
+  const session = await getServerSession(authOptions);
+
+  return (
+    <Challenge
+      challenge={challenge}
+      fileSystem={fileSystem.tree}
+      user={session?.user}
+    />
+  );
 }
