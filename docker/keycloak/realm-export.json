@@ -1,0 +1,67 @@
+{
+  "realm": "webdojo",
+  "enabled": true,
+  "displayName": "WebDojo",
+  "displayNameHtml": "<div class=\"kc-logo-text\"><span>WebDojo</span></div>",
+  "roles": {
+    "realm": [
+      {
+        "name": "challenger",
+        "description": "Can create and manage challenge series"
+      },
+      {
+        "name": "challengee",
+        "description": "Can participate in challenges"
+      }
+    ]
+  },
+  "defaultRoles": ["challengee"],
+  "clients": [
+    {
+      "clientId": "webdojo-client",
+      "secret": "webdojo-secret",
+      "enabled": true,
+      "publicClient": true,
+      "redirectUris": [
+        "http://localhost:3000/*"
+      ],
+      "webOrigins": [
+        "http://localhost:3000"
+      ],
+      "protocol": "openid-connect",
+      "directAccessGrantsEnabled": true
+    }
+  ],
+  "users": [
+    {
+      "username": "trillian",
+      "enabled": true,
+      "firstName": "Tricia",
+      "lastName": "McMillan",
+      "email": "trillian@hitchhiker.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["challenger"]
+    },
+    {
+      "username": "dent",
+      "enabled": true,
+      "firstName": "Arthur",
+      "lastName": "Dent",
+      "email": "dent@hitchhiker.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["challengee"]
+    }
+  ]
+}

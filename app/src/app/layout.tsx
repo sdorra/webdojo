@@ -1,5 +1,6 @@
-import Link from "next/link";
+import { Footer } from "@/components/Footer";
 import "./globals.css";
+import { Header } from "@/components/Header";
 
 export default function RootLayout({
   children,
@@ -10,25 +11,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="grid grid-rows-[auto,1fr,auto] min-h-screen p-5">
-          <header className="flex items-center gap-5">
-            <h1 className="font-bold text-xl">WebDojo</h1>
-            <nav>
-              <ul>
-                <li>
-                  <Link
-                    href="/"
-                    className="underline decoration-2 decoration-transparent hover:decoration-foreground"
-                  >
-                    Challenges
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </header>
+          <Header />
           <main>{children}</main>
-          <footer className="text-right pt-2">
-            Made with ❤️ by Sebastian Sdorra
-          </footer>
+          <Footer />
         </div>
       </body>
     </html>

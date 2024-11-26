@@ -36,7 +36,6 @@ export default function useTerminal<T extends HTMLElement>() {
 
   useEffect(() => {
     const resize = () => {
-      console.log("resizing terminal");
       fitAddonRef.current?.fit();
     };
 
@@ -72,7 +71,6 @@ export default function useTerminal<T extends HTMLElement>() {
             xterm.dispose();
           },
           fit: () => {
-            console.log("fitting terminal");
             fitAddon.fit();
           }
         };
