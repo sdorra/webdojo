@@ -11,14 +11,13 @@ import { Editor } from "./Editor";
 import { TestDialog } from "./TestDialog";
 import { Challenge as ChallengeType } from "content-collections";
 import { Instructions } from "./Instructions";
-import { Solution } from "./Solution";
-import { MarkAsComplete } from "./MarkAsComplete";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "./ui/resizable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { SubmitSolutionButton } from "./SubmitSolutionButton";
 
 type Props = {
   challenge: ChallengeType;
@@ -36,10 +35,6 @@ export function Challenge({ challenge, fileSystem }: Props) {
   const [code, setCode] = useState(challenge.main.content);
   const debouncedCode = useDebounce(code, 300);
 
-  function copySolution() {
-    setCode(challenge.solution.content);
-  }
-
   function onTabChange(value: string) {
     terminal?.fit();
     setSelectedTab(value);
@@ -54,8 +49,7 @@ export function Challenge({ challenge, fileSystem }: Props) {
       <nav className="flex items-center gap-2 justify-end text-right py-2">
         <Instructions challenge={challenge} />
         <TestDialog challenge={challenge} test={test} />
-        <Solution copySolution={copySolution} />
-        <MarkAsComplete challenge={challenge.name} />
+        <SubmitSolutionButton challenge={challenge} code={code} />
       </nav>
       <ResizablePanelGroup direction="horizontal" className="border rounded-md shadow-md">
         <ResizablePanel>
